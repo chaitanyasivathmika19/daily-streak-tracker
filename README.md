@@ -17,6 +17,13 @@ Daily Streak Tracker is a lightweight **web app built with HTML, Tailwind CSS, a
 - 💾 Offline-friendly (data stored in `localStorage`)
 - 🔔 Notifications for pending tasks
 
+## Built With
+- HTML5  
+- Tailwind CSS  
+- JavaScript (Vanilla JS)  
+- LocalStorage API  
+
+
 ## Files
 - `index.html` — main HTML file with Tailwind CSS included  
 - `app.js` — JavaScript for interactive tasks, streaks, and calendar
