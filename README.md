@@ -52,16 +52,22 @@ Daily Streak Tracker is a lightweight **web app built with HTML, Tailwind CSS, a
 
 8. **Profile Management**  
    Manage your profile in the About section.
+## Screenshots  
 
-<img width="1919" height="994" alt="image" src="https://github.com/user-attachments/assets/d3adab77-aa6a-4353-97e6-c137b3b5a1d4" />
+### Dashboard & Task View  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d3adab77-aa6a-4353-97e6-c137b3b5a1d4" width="48%" />
+  <img src="https://github.com/user-attachments/assets/222bbf33-7013-42fe-b8d0-ef9d2fdd219d" width="48%" />
+</p>
 
-<img width="1919" height="995" alt="image" src="https://github.com/user-attachments/assets/222bbf33-7013-42fe-b8d0-ef9d2fdd219d" />
+### Calendar & Streaks  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2f252e98-2df6-4003-8de0-25d2d3030e08" width="48%" />
+  <img src="https://github.com/user-attachments/assets/dfb42bf1-c058-4460-8714-947efa7aa690" width="48%" />
+</p>
 
-
-<img width="1919" height="995" alt="image" src="https://github.com/user-attachments/assets/2f252e98-2df6-4003-8de0-25d2d3030e08" />
-
-<img width="1918" height="985" alt="image" src="https://github.com/user-attachments/assets/dfb42bf1-c058-4460-8714-947efa7aa690" />
-<img width="1919" height="997" alt="image" src="https://github.com/user-attachments/assets/7e646196-2151-4268-b92d-0c756b65cc41" />
-
-<img width="1919" height="1001" alt="image" src="https://github.com/user-attachments/assets/03064eba-f46e-47a7-8c6d-1715504d9c55" />
-
+### Search & About  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7e646196-2151-4268-b92d-0c756b65cc41" width="48%" />
+  <img src="https://github.com/user-attachments/assets/03064eba-f46e-47a7-8c6d-1715504d9c55" width="48%" />
+</p>
