@@ -71,10 +71,13 @@ root/
   <img src="https://github.com/user-attachments/assets/dfb42bf1-c058-4460-8714-947efa7aa690" width="48%" />
 </p>
 
-**Made with ❤️ in HTML + JS**
+
 
 ### Search & About  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7e646196-2151-4268-b92d-0c756b65cc41" width="48%" />
   <img src="https://github.com/user-attachments/assets/03064eba-f46e-47a7-8c6d-1715504d9c55" width="48%" />
 </p>
+
+
+**Made with ❤️ in HTML + JS**
