@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Daily Streak — ToDo & Calendar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card { transition: box-shadow .12s ease, transform .12s ease }
+    .card:hover { transform: translateY(-4px) }
+    .dot { width:8px;height:8px;border-radius:9999px;display:inline-block }
+    @media (min-width: 768px){ #sidebar { min-width: 260px } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased">
+  <div class="min-h-screen flex">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="bg-white border-r shadow-sm p-3 flex flex-col gap-4">
+      <div class="flex items-center gap-3 px-2">
+        <div class="w-10 h-10 bg-gradient-to-tr from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center text-white font-bold">DS</div>
+        <div>
+          <div class="text-sm font-bold">Daily Streak</div>
+          <div class="text-xs text-slate-500">Tasks & habits</div>
+        </div>
+      </div>
+
+      <nav class="flex-1 mt-2 space-y-1">
+        <button data-route="home" class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">🏠 <span>Home</span></button>
+        <button data-route="all"  class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">📑 <span>All Tasks</span></button>
+        <button data-route="streak" class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">🔥 <span>Streak</span></button>
+        <button data-route="calendar" class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">🗓️ <span>Calendar</span></button>
+        <button data-route="search" class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">🔎 <span>Search</span></button>
+        <button data-route="about"  class="nav-btn w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 card">👤 <span>About</span></button>
+      </nav>
+
+      <div class="border-t pt-3">
+        <div class="flex items-center gap-3 px-2">
+          <img id="profileAvatar" src="https://via.placeholder.com/44" alt="avatar" class="w-11 h-11 rounded-full"/>
+          <div class="flex-1 text-sm">
+            <div id="profileName" class="font-semibold">Your Name</div>
+            <div id="profileEmail" class="text-xs text-slate-500">you@example.com</div>
+          </div>
+          <button id="notifBell" title="Notifications" class="p-2 rounded-full hover:bg-slate-100 card">🔔<span id="notifCount" class="ml-1 text-xs text-red-500"></span></button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="flex-1 flex flex-col">
+      <!-- topbar -->
+      <header class="flex items-center justify-between p-3 border-b bg-white">
+        <div class="flex items-center gap-3">
+          <button id="menuToggle" class="md:hidden p-2 rounded-md hover:bg-slate-100">☰</button>
+          <h1 id="pageTitle" class="text-lg font-semibold">Home</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <input id="globalSearch" placeholder="Search tasks..." class="px-3 py-2 rounded-lg border w-60 hidden md:inline-block"/>
+          <button id="addQuick" class="px-3 py-2 bg-blue-600 text-white rounded-lg">+ Add Task</button>
+        </div>
+      </header>
+
+      <main class="p-4 flex-1 overflow-y-auto">
+        <!-- HOME -->
+        <section id="view-home" class="view">
+          <div class="grid md:grid-cols-3 gap-4">
+            <div class="md:col-span-2 bg-white rounded-2xl p-4 shadow-sm">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-xs text-slate-500">Today • <span id="homeDateLabel"></span></div>
+                  <h2 class="text-xl font-semibold">Today's Tasks</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="prevDay" class="px-2 py-1 rounded-lg border">←</button>
+                  <button id="nextDay" class="px-2 py-1 rounded-lg border">→</button>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <div class="flex gap-2">
+                  <input id="homeTaskInput" placeholder="Add a quick task for today..." class="flex-1 px-3 py-2 rounded-xl border"/>
+                  <button id="homeAddBtn" class="px-3 py-2 rounded-xl bg-emerald-600 text-white">Add</button>
+                </div>
+
+                <ul id="homeTaskList" class="mt-4 divide-y"></ul>
+
+                <div id="homeFooter" class="mt-4 flex items-center justify-between text-sm text-slate-600">
+                  <div id="homeSummary">0 / 0 completed</div>
+                  <div class="flex items-center gap-2">
+                    <button id="movePendingToToday" class="px-2 py-1 rounded-md border text-sm">Bring pending</button>
+                    <button id="clearTodayDone" class="px-2 py-1 rounded-md border text-sm">Clear done</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="bg-white rounded-2xl p-4 shadow-sm space-y-4">
+              <div>
+                <div class="text-xs text-slate-500">Streak</div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <div class="text-2xl font-bold" id="streakCount">0</div>
+                    <div class="text-sm text-slate-600" id="streakName">No habit set</div>
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <button id="completeHabitBtn" class="px-3 py-1 rounded-lg border">Mark Today ✅</button>
+                    <button id="setHabitBtn" class="px-3 py-1 rounded-lg border">Edit</button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="text-xs text-slate-500 mb-2">Mini Calendar</div>
+                <div id="miniCalendar" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+                <div class="text-xs text-slate-500 mt-2">Tap day to switch</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ALL TASKS -->
+        <section id="view-all" class="view hidden">
+          <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-semibold">All Tasks</h2>
+              <div class="flex items-center gap-2">
+                <input id="allFilterDate" type="date" class="px-2 py-1 rounded-lg border"/>
+                <button id="exportBtn" class="px-2 py-1 rounded-lg border">Export</button>
+              </div>
+            </div>
+
+            <div id="allTasksList" class="mt-4 space-y-3"></div>
+          </div>
+        </section>
+
+        <!-- STREAK -->
+        <section id="view-streak" class="view hidden">
+          <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h2 class="text-lg font-semibold">Streak / Habit Tracker</h2>
+            <div class="mt-4 grid md:grid-cols-3 gap-4">
+              <div class="md:col-span-2 space-y-3">
+                <div>
+                  <input id="habitInput" placeholder="Habit name (e.g., Study 1hr)" class="w-full px-3 py-2 rounded-lg border"/>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="saveHabitBtn" class="px-3 py-2 rounded-lg bg-emerald-600 text-white">Save Habit</button>
+                  <button id="resetHabitBtn" class="px-3 py-2 rounded-lg border">Reset</button>
+                </div>
+                <div class="mt-3">
+                  <div id="habitHistory" class="text-sm text-slate-600"></div>
+                </div>
+              </div>
+
+              <div class="bg-slate-50 rounded-lg p-3">
+                <div class="text-sm text-slate-500">Current streak</div>
+                <div class="text-3xl font-bold" id="streakBig">0</div>
+                <div class="text-sm text-slate-600 mt-2" id="streakLastDone"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CALENDAR -->
+        <section id="view-calendar" class="view hidden">
+          <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-semibold">Calendar</h2>
+              <div class="flex items-center gap-2">
+                <button id="calendarPrev" class="px-2 py-1 rounded-lg border">Prev</button>
+                <button id="calendarNext" class="px-2 py-1 rounded-lg border">Next</button>
+              </div>
+            </div>
+
+            <div id="fullCalendar" class="mt-4 grid grid-cols-7 gap-2 text-xs"></div>
+
+            <div class="mt-4">
+              <div class="flex gap-2">
+                <input id="calTaskInput" placeholder="Add task for selected date" class="flex-1 px-3 py-2 rounded-lg border"/>
+                <button id="calAddBtn" class="px-3 py-2 rounded-lg bg-blue-600 text-white">Add</button>
+              </div>
+              <div id="calDateLabel" class="text-sm text-slate-600 mt-2"></div>
+              <ul id="calTaskList" class="mt-3 divide-y"></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SEARCH -->
+        <section id="view-search" class="view hidden">
+          <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center gap-2">
+              <input id="searchText" placeholder="Search text..." class="px-3 py-2 rounded-lg border flex-1"/>
+              <input id="searchDate" type="date" class="px-3 py-2 rounded-lg border"/>
+              <button id="doSearch" class="px-3 py-2 rounded-lg bg-indigo-600 text-white">Search</button>
+            </div>
+            <div id="searchResults" class="mt-4"></div>
+          </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="view-about" class="view hidden">
+          <div class="bg-white rounded-2xl p-4 shadow-sm">
+            <h2 class="text-lg font-semibold">About Me</h2>
+            <div class="mt-3 text-sm text-slate-700">
+              <p id="aboutText">Add your profile details here. This panel can include your name, email, short bio and links.</p>
+              <div class="mt-3">
+                <label class="text-xs text-slate-500">Name</label>
+                <input id="aboutName" class="w-full px-3 py-2 rounded-lg border mt-1"/>
+                <label class="text-xs text-slate-500 mt-2">Email</label>
+                <input id="aboutEmail" class="w-full px-3 py-2 rounded-lg border mt-1"/>
+                <label class="text-xs text-slate-500 mt-2">Short bio</label>
+                <textarea id="aboutBio" rows="3" class="w-full px-3 py-2 rounded-lg border mt-1"></textarea>
+                <div class="mt-3 flex gap-2">
+                  <button id="saveProfile" class="px-3 py-2 rounded-lg bg-blue-600 text-white">Save</button>
+                  <button id="clearProfile" class="px-3 py-2 rounded-lg border">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="p-3 text-center text-xs text-slate-500">
+        Data stored locally on your device (localStorage). Works offline for one device.
+      </footer>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
