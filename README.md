@@ -47,11 +47,11 @@ Daily Streak Tracker is a lightweight **web app built with HTML, Tailwind CSS, a
 6. **Track Habits**  
    Track habit streaks and view history.
 
-7. **Calendar**
+7. **Calendar**  
    Use the mini or full calendar to view and add tasks for any date.
-8. **Profile Management**
-   Manage your profile in the About section.
 
+8. **Profile Management**  
+   Manage your profile in the About section.
 
 <img width="1919" height="994" alt="image" src="https://github.com/user-attachments/assets/d3adab77-aa6a-4353-97e6-c137b3b5a1d4" />
 
@@ -65,6 +65,3 @@ Daily Streak Tracker is a lightweight **web app built with HTML, Tailwind CSS, a
 
 <img width="1919" height="1001" alt="image" src="https://github.com/user-attachments/assets/03064eba-f46e-47a7-8c6d-1715504d9c55" />
 
-
-9. **Profile Management**  
-   Manage your profile in the About section.
