@@ -28,13 +28,16 @@ Daily Streak Tracker is a lightweight **web app built with HTML, Tailwind CSS, a
 - `index.html` — main HTML file with Tailwind CSS included  
 - `app.js` — JavaScript for interactive tasks, streaks, and calendar
 
+---
+
 ## Project Structure
 
-
 / (root)  
-│── index.html   # 🏗️  Main HTML with Tailwind CSS included
-│── app.js       # 🧠Handles tasks, streaks, calendar, and logic
+│── index.html   # 🏗️ Main HTML with Tailwind CSS included  
+│── app.js       # 🧠 Handles tasks, streaks, calendar, and logic  
 │── README.md    # 📘 Documentation  
+
+---
 
 ## Installation
 1. Clone the repository:
